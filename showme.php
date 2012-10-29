@@ -1,26 +1,25 @@
 <?php
-$bv = "bilder";
-$vb = "vorschaubilder";
-$verzeichnis = opendir($bv);
-$bilder = array();
-//für png und gifs
-$bilder2 = array();
-$bilder3 = array();
-while (($datei = readdir($verzeichnis)) !== false) {
+$bv = "pics";
+$pp = "prepics";
+$directory = opendir($bv);
+$pics = array();
+$pics2 = array();
+$pics3 = array();
+while (($datei = readdir($directory)) !== false) {
   if (preg_match("/\.jpe?g$/", $datei)) {
-    $bilder[] = $datei;
+    $pics[] = $datei;
   }
   //für png und gifs
   elseif (preg_match("/\.png$/", $datei)) {
-    $bilder2[] = $datei;
+    $pics2[] = $datei;
   }
   elseif (preg_match("/\.gif$/", $datei)) {
-    $bilder3[] = $datei;
+    $pics3[] = $datei;
   }
 }
-closedir($verzeichnis);
-foreach ($bilder as $bild) {
-  $b = imagecreatefromjpeg("$bv/$bild");
+closedir($directory);
+foreach ($pics as $pic) {
+  $b = imagecreatefromjpeg("$bv/$pic");
   $originalbreite = imagesx($b);
   $originalhoehe = imagesy($b);
   $neuebreite = 100;
@@ -28,32 +27,32 @@ foreach ($bilder as $bild) {
   $neuesbild = imagecreatetruecolor($neuebreite, $neuehoehe);
   imagecopyresampled($neuesbild, $b, 0, 0, 0, 0, $neuebreite, $neuehoehe, $originalbreite, $originalhoehe);
   // echo "Thumbnail erzeugt für $bild<br />";
-  imagejpeg($neuesbild, "$vb/$bild");
+  imagejpeg($neuesbild, "$pp/$pic");
   imagedestroy($neuesbild);
 }
 //für png und gifs
-foreach ($bilder2 as $bild) {
-  $b = imagecreatefrompng("$bv/$bild");
+foreach ($pics2 as $pic) {
+  $b = imagecreatefrompng("$bv/$pic");
   $originalbreite = imagesx($b);
   $originalhoehe = imagesy($b);
   $neuebreite = 100;
   $neuehoehe = floor($originalhoehe * ($neuebreite / $originalbreite));
   $neuesbild = imagecreatetruecolor($neuebreite, $neuehoehe);
   imagecopyresampled($neuesbild, $b, 0, 0, 0, 0, $neuebreite, $neuehoehe, $originalbreite, $originalhoehe);
-  // echo "Thumbnail erzeugt für $bild<br />";
-  imagepng($neuesbild, "$vb/$bild");
+  // echo "Thumbnail erzeugt für $pic<br />";
+  imagepng($neuesbild, "$pp/$pic");
   imagedestroy($neuesbild);
 }
-foreach ($bilder3 as $bild) {
-  $b = imagecreatefromgif("$bv/$bild");
+foreach ($pics3 as $pic) {
+  $b = imagecreatefromgif("$bv/$pic");
   $originalbreite = imagesx($b);
   $originalhoehe = imagesy($b);
   $neuebreite = 100;
   $neuehoehe = floor($originalhoehe * ($neuebreite / $originalbreite));
   $neuesbild = imagecreatetruecolor($neuebreite, $neuehoehe);
   imagecopyresampled($neuesbild, $b, 0, 0, 0, 0, $neuebreite, $neuehoehe, $originalbreite, $originalhoehe);
-  // echo "Thumbnail erzeugt für $bild<br />";
-  imagegif($neuesbild, "$vb/$bild");
+  // echo "Thumbnail erzeugt für $pic<br />";
+  imagegif($neuesbild, "$pp/$pic");
   imagedestroy($neuesbild);
 }
 ?>

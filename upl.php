@@ -4,7 +4,7 @@ if (isset($_FILES["datei"]) AND ! $_FILES["datei"]["error"]  AND  ($_FILES["date
 	$width = $bildinfo[0];
 	$height =$bildinfo[1];
     if ($bildinfo === false) {
-      die("kein Bild");
+      die("That`s not a picture!");
     } 
 	else {
       $mime = $bildinfo["mime"];
@@ -14,11 +14,12 @@ if (isset($_FILES["datei"]) AND ! $_FILES["datei"]["error"]  AND  ($_FILES["date
 	    "image/png" => "png"
 	);
      if (!isset($mimetypen[$mime])) {
-       die("nicht das richtige Format");
+       die("This is not the right format!");
      } 
-	elseif($width == 1080 || $height ==1920){
-		die("Um die beste Qualität zu garantieren,
-		     darf das Bild nur im HD-Format (1080 x 1920) sein.");
+	elseif($width != 1080 || $height !=1920){
+		die("To guarantee the best quality,
+			the photo should only be in HD-format (1080 x 1920). <br/>
+			Please use jpg, png or gif!");
 	} else {
        $endung = $mimetypen[$mime];
      }
@@ -27,16 +28,17 @@ if (isset($_FILES["datei"]) AND ! $_FILES["datei"]["error"]  AND  ($_FILES["date
      $neuername = preg_replace("/\.(jpe?g|gif|png)$/i", "", $neuername);  
      $neuername = preg_replace("/[^a-zA-Z0-9_-]/", "", $neuername);     
      $neuername .= ".$endung";
-     $ziel = "bilder/$neuername";
+     $ziel = "pics/$neuername";
      while (file_exists($ziel)) {
-       $neuername = "kopie_$neuername";
-       $ziel = "bilder/$neuername";
+       $neuername = "copy_$neuername";
+       $ziel = "pics/$neuername";
      }
       if (@move_uploaded_file($_FILES["datei"]["tmp_name"], $ziel)) {
-        echo "Dateiupload hat geklappt";
-		include "vorschaubilder.php";
+        echo "File-Upload was successful!";
+		include "showme.php";
      } else {
-       echo "Dateiupload hat nicht geklappt";
+       echo "File-Upload was not successful!";
+	   include "showme.php";
     }
   }
 }
