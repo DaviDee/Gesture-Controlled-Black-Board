@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿<?php
+session_start();
+if (isset($_SESSION["login"]) && $_SESSION["login"] == "ok") {
+?>
+<!DOCTYPE html>
 <html>
  <head>
   <title>Gesture-Controlled-Black-Board</title>
@@ -45,5 +49,14 @@ foreach($pics as $pic) {
 }
 ?>
 </div>
+<p><a href="logout.php">Logout</p>
 </body>
 </html>
+<?php
+} else {
+  $host  = htmlspecialchars($_SERVER["HTTP_HOST"]);
+  $uri   = rtrim(dirname(htmlspecialchars($_SERVER["PHP_SELF"])), "/\\");
+  $direction = "start.php";
+  header("Location: http://$host$uri/$direction");
+}
+?>
