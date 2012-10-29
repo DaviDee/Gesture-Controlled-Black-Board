@@ -10,7 +10,7 @@ if (isset($_POST["name"])
    $_SESSION["login"] = "ok";
    $direction = "Gesture-Controlled-Black-Board.php";
  } else {
-   $direction = "start.php?hehe=don`t make me laugh!!!";
+   $direction = "index.php?hehe=don`t make me laugh!!!";
  }
  header("Location: http://$host$uri/$direction");
  ?>

@@ -7,6 +7,6 @@ if (isset($_COOKIE[session_name()])) {
 session_destroy();
 $host  = htmlspecialchars($_SERVER["HTTP_HOST"]);
 $uri   = rtrim(dirname(htmlspecialchars($_SERVER["PHP_SELF"])), "/\\");
-$direction = "start.php";
+$direction = "index.php";
 header("Location: http://$host$uri/$direction");
 ?>
