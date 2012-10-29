@@ -13,10 +13,10 @@
 <body>
 <h1>Gesture-Controlled-Black-Board</h1>
 <form action="<?php echo htmlentities($_SERVER["PHP_SELF"]); ?>" method="post" enctype="multipart/form-data">
-Datei: <br />
+File: <br />
 <input type="hidden" name="MAX_FILE_SIZE" value="10000000" />
-<input type="file" name="datei" /><br />
-<input type="submit" value="Hochladen" />
+<input type="file" name="file" /><br />
+<input type="submit" value="Upload" />
 </form>
 <?php include "upl.php"; ?>
 <div id="pics">
@@ -24,22 +24,20 @@ Datei: <br />
 $bv = "pics";
 $directory = opendir($bv);
 $pics = array();
-while (($datei = readdir($directory)) !== false) {
-  if (preg_match("/\.jpe?g$/", $datei)) {
-    $pics[] = $datei;
+while (($file = readdir($directory)) !== false) {
+  if (preg_match("/\.jpe?g$/", $file)) {
+    $pics[] = $file;
   }
-  //für png und gifs
-  elseif(preg_match("/\.png$/", $datei)) {
-    $pics[] = $datei;
+  elseif(preg_match("/\.png$/", $file)) {
+    $pics[] = $file;
   }
-  elseif(preg_match("/\.gif$/", $datei)) {
-    $pics[] = $datei;
+  elseif(preg_match("/\.gif$/", $file)) {
+    $pics[] = $file;
   }
 }
 closedir($directory);
 foreach($pics as $pic) {
   echo "<a href='pics/$pic'><img src='prepics/$pic' alt='' /></a>";
-  //echo "<a class='links' href='pics/$pic'>Link</a>";
   echo "<form class=\"del\" action=\"del.php\" method=\"post\" >";
      echo "<input type=hidden name=\"pic\" value=\"$pic\" />";
      echo "<input type=\"submit\" value=\"X\" />";

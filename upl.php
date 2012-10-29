@@ -1,6 +1,6 @@
 ﻿<?php
-if (isset($_FILES["datei"]) AND ! $_FILES["datei"]["error"]  AND  ($_FILES["datei"]["size"] < 10000000 )) {
-    $bildinfo = getimagesize($_FILES["datei"]["tmp_name"]);
+if (isset($_FILES["file"]) AND ! $_FILES["file"]["error"]  AND  ($_FILES["file"]["size"] < 10000000 )) {
+    $bildinfo = getimagesize($_FILES["file"]["tmp_name"]);
 	$width = $bildinfo[0];
 	$height =$bildinfo[1];
     if ($bildinfo === false) {
@@ -11,8 +11,7 @@ if (isset($_FILES["datei"]) AND ! $_FILES["datei"]["error"]  AND  ($_FILES["date
       $mimetypen = array (
         "image/jpeg" => "jpg",
 	    "image/gif" => "gif",
-	    "image/png" => "png"
-	);
+	    "image/png" => "png" );
      if (!isset($mimetypen[$mime])) {
        die("This is not the right format!");
      } 
@@ -23,8 +22,7 @@ if (isset($_FILES["datei"]) AND ! $_FILES["datei"]["error"]  AND  ($_FILES["date
 	} else {
        $endung = $mimetypen[$mime];
      }
-
-     $neuername = basename($_FILES["datei"]["name"]);
+     $neuername = basename($_FILES["file"]["name"]);
      $neuername = preg_replace("/\.(jpe?g|gif|png)$/i", "", $neuername);  
      $neuername = preg_replace("/[^a-zA-Z0-9_-]/", "", $neuername);     
      $neuername .= ".$endung";
@@ -33,7 +31,7 @@ if (isset($_FILES["datei"]) AND ! $_FILES["datei"]["error"]  AND  ($_FILES["date
        $neuername = "copy_$neuername";
        $ziel = "pics/$neuername";
      }
-      if (@move_uploaded_file($_FILES["datei"]["tmp_name"], $ziel)) {
+      if (@move_uploaded_file($_FILES["file"]["tmp_name"], $ziel)) {
         echo "File-Upload was successful!";
 		include "showme.php";
      } else {
