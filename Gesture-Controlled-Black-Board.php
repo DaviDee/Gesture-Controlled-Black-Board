@@ -41,7 +41,7 @@ foreach($pics as $pic) {
   echo "<a href='pics/$pic'><img src='prepics/$pic' alt='' /></a>";
   //echo "<a class='links' href='pics/$pic'>Link</a>";
   echo "<form class=\"del\" action=\"del.php\" method=\"post\" >";
-     echo "<input type=hidden name=\"bild\" value=\"$pic\" />";
+     echo "<input type=hidden name=\"pic\" value=\"$pic\" />";
      echo "<input type=\"submit\" value=\"X\" />";
   echo "</form>";
 }
